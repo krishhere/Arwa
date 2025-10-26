@@ -744,3 +744,4 @@
 /Users/bgkrishna/Desktop/Projects/Arwa/Arwa/Arwa/obj/Debug/net9.0/Arwa.csproj.Up2Date
 /Users/bgkrishna/Desktop/Projects/Arwa/Arwa/Arwa/obj/Debug/net9.0/compressed/60f5zch6m2-4uastcfx8c.gz
 /Users/bgkrishna/Desktop/Projects/Arwa/Arwa/Arwa/obj/Debug/net9.0/compressed/eukse6fnel-mpoppy24bv.gz
+/Users/bgkrishna/Desktop/Projects/Arwa/Arwa/Arwa/obj/Debug/net9.0/Arwa.sourcelink.json

@@ -8,14 +8,13 @@
     <meta name="description" content="Responsive Bootstrap 5 admin dashboard template & web App ui kit.">
     <meta name="keyword" content="water supply management admin template">
     <link rel="icon" href="~/assets/img/favicon.ico" type="image/x-icon">
-    <title>@ViewData["Title"] :: Aqua Admin Dashboard</title>
-
+    <title>Arwa - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/assets/bundles/dataTables.min.css">
     <link rel="stylesheet" href="~/assets/vendor/metismenu/metismenu.min.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
     <script src="~/assets/js/plugins.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
 </head>
 
 <body class="aqua admin layout-v1" data-aqua="theme-Mariner">
@@ -24,7 +23,7 @@
         <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvas_Navbar">
             <div class="offcanvas-header">
                 <div class="d-flex">
-                    <a href="index.html" class="brand-icon d-flex align-items-center">
+                    <a href="/DailySales" class="brand-icon d-flex align-items-center">
                         <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill="var(--primary-color)" fill-rule="evenodd" clip-rule="evenodd"
                                 d="M19.811 16.1238C19.9349 16.8834 20 17.6371 20 18.3778C20 26.4641 12.4693 29.5004 6.81532 27.4825C7.97764 23.0246 17.6597 20.484 19.811 16.1238Z" />
@@ -37,14 +36,14 @@
                                 d="M5.73097 28.0795C3.83989 21.2432 22.2046 19.0061 18.9649 12.0077C19.4499 18.3177 0.333901 20.7269 5.73097 28.0795Z"
                                 fill="#171825" />
                         </svg>
-                        <span class="fs-5 fw-medium ms-2 text-primary lh-sm">AQUA</span>
+                        <span class="fs-5 fw-medium ms-2 text-primary lh-sm">Arwa</span>
                     </a>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
             <div class="offcanvas-body flex-column ps-xl-3 py-0 pt-2 pt-xl-0">
-                <a href="index.html" class="brand-icon d-xl-flex d-none mb-3 py-3 align-items-center ps-1">
+                <a href="/DailySales" class="brand-icon d-xl-flex d-none mb-3 py-3 align-items-center ps-1">
                     <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill="var(--primary-color)" fill-rule="evenodd" clip-rule="evenodd"
                             d="M19.811 16.1238C19.9349 16.8834 20 17.6371 20 18.3778C20 26.4641 12.4693 29.5004 6.81532 27.4825C7.97764 23.0246 17.6597 20.484 19.811 16.1238Z" />
@@ -57,7 +56,7 @@
                             d="M5.73097 28.0795C3.83989 21.2432 22.2046 19.0061 18.9649 12.0077C19.4499 18.3177 0.333901 20.7269 5.73097 28.0795Z"
                             fill="#171825" />
                     </svg>
-                    <span class="fs-5 fw-medium ms-2 text-primary lh-sm">AQUA</span>
+                    <span class="fs-5 fw-medium ms-2 text-primary lh-sm">Arwa</span>
                 </a>
                 <div class="d-flex align-items-start menu-tab">
                     <div class="nav flex-column nav-pills me-xl-3 me-2" role="tablist" aria-orientation="vertical">
@@ -78,54 +77,21 @@
                             <ul class="metismenu list-unstyled">
                                 <li><a class="active" href="index.html">My Dashboard</a></li>
                                 <li><a href="my-analytics.html">Analytics</a></li>
-                                <li><a href="my-project.html">Project's</a></li>
-                                <li><a href="my-invoice.html">Invoice</a></li>
-                                <li><a href="my-wallet.html">My Wallet</a></li>
-                                <li><a href="my-iot.html">My Smart Home</a></li>
-                                <li><a href="my-task.html">My Tasks</a></li>
-                                <li class="text-muted small ps-1 mt-3 text-uppercase">--Help</li>
-                                <li><a href="account.html">Account Settings</a></li>
-                                <li><a href="docs/documentation.html"><span>Documentation</span></a></li>
-                                <li><a href="changelog.html"><span>Changelog</span></a></li>
                             </ul>
                         </div>
                         <div class="tab-pane fade" id="v1-pages" role="tabpanel" tabindex="0">
                             <ul class="metismenu list-unstyled">
                                 <li class="text-muted small ps-1 text-uppercase">--Application</li>
                                 <li><a href="app-inbox.html">App Inbox</a></li>
-                                <li><a href="app-chat.html">App Chat</a></li>
-                                <li><a href="app-calendar.html">App Calendar</a></li>
-                                <li><a href="app-contacts.html">App Contacts</a></li>
-                                <li><a href="app-filemanager.html">App File Manager</a></li>
                                 <li class="text-muted small ps-1 mt-3 text-uppercase">--Crafted Page</li>
                                 <li><a href="account.html">Account Setting</a></li>
-                                <li><a href="crafted-profile.html">My Profile</a></li>
-                                <li><a href="crafted-activity.html">User Activity</a></li>
-                                <li><a href="crafted-gallery.html">Imgae gallery</a></li>
-                                <li><a href="crafted-ticket.html">Support Ticket</a></li>
-                                <li><a href="crafted-pricing.html">Pricing table</a></li>
-                                <li><a href="crafted-search.html">Search page</a></li>
-                                <li><a href="crafted-map.html">World Map</a></li>
                             </ul>
                         </div>
                         <div class="tab-pane fade" id="v1-resources" role="tabpanel" tabindex="0">
                             <ul class="metismenu list-unstyled">
                                 <li class="mm-active">
-                                    <a class="has-arrow" href="layout-v2.html#">Bootstrap UI</a>
+                                    <a class="has-arrow" href="#"> UI</a>
                                     <ul class="list-unstyled">
-                                        <li><a class="sub-link" href="docs/ui-accordion.html">Accordion</a></li>
-                                        <li><a class="sub-link" href="docs/ui-alerts.html">Alerts</a></li>
-                                        <li><a class="sub-link" href="docs/ui-avatar.html">User Avatar</a></li>
-                                        <li><a class="sub-link" href="docs/ui-badges.html">Badges</a></li>
-                                        <li><a class="sub-link" href="docs/ui-breadcrumb.html">Breadcrumb</a></li>
-                                        <li><a class="sub-link" href="docs/ui-buttons.html">Buttons</a></li>
-                                        <li><a class="sub-link" href="docs/ui-cards.html">Cards</a></li>
-                                        <li><a class="sub-link" href="docs/ui-carousel.html">Carousel</a></li>
-                                        <li><a class="sub-link" href="docs/ui-collapse.html">Collapse</a></li>
-                                        <li><a class="sub-link" href="docs/ui-dropdowns.html">Dropdowns</a></li>
-                                        <li><a class="sub-link" href="docs/ui-listgroup.html">List group</a></li>
-                                        <li><a class="sub-link" href="docs/ui-modal.html">Modal</a></li>
-                                        <li><a class="sub-link" href="docs/ui-navstabs.html">Navs and tabs</a></li>
                                         <li><a class="sub-link" href="docs/ui-navbar.html">Navbar</a></li>
                                         <li><a class="sub-link" href="docs/ui-offcanvas.html">Offcanvas</a></li>
                                         <li><a class="sub-link" href="docs/ui-pagination.html">Pagination</a></li>
@@ -136,85 +102,14 @@
                                         <li><a class="sub-link" href="docs/ui-toasts.html">Toasts</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="docs/widget.html">Widget's</a></li>
+                                <li><a href="">Widget's</a></li>
                                 <li>
-                                    <a class="has-arrow" href="layout-v2.html#">Vendor Plugin</a>
+                                    <a class="has-arrow" href="#">Vendor Plugin</a>
                                     <ul class="list-unstyled">
                                         <li><a class="sub-link" href="docs/plugin-datatable.html">DataTables</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-owlcarousel.html">owl Carousel</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/plugin-summernote.html">Summernote</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-fancybox.html">Fancybox</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-fullcalendar.html">Full calendar</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/plugin-tuicalendar.html">tui Calendar</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/plugin-dropify.html">Dropify</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-jkanban.html">jKanban Board</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-jsgrid.html">jsgrid</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-masonrygallery.html">Masonry
-                                                Gallery</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-nestable.html">nestable</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-countup.html">Count Up</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-tabledragger.html">Table Dragger</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/plugin-swiper.html">Swiper</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-jspreadsheet.html">jspreadsheet</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/plugin-rating.html">Rating Review</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-br-tabs.html">Responsive Tabs</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-bootstrap-select.html">Bootstrap
-                                                Select</a></li>
-                                        <li><a class="sub-link" href="docs/plugin-bs5-toast.html">Bootstrap 5 toast</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/plugin-bootstrap-touchspin.html">Bootstrap
-                                                TouchSpin</a></li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a class="has-arrow" href="layout-v2.html#">Form Elements</a>
-                                    <ul class="list-unstyled">
-                                        <li><a class="sub-link" href="docs/form-clipboard.html">Clipboard</a></li>
-                                        <li><a class="sub-link" href="docs/form-datepicker.html">Datepicker</a></li>
-                                        <li><a class="sub-link" href="docs/form-daterange.html">Date Range Picker</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/form-flatpickr.html">Flatpickr</a></li>
-                                        <li><a class="sub-link" href="docs/form-inputmask.html">Inputmask</a></li>
-                                        <li><a class="sub-link" href="docs/form-maxlength.html">Bootstrap Maxlength</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/form-nouislider.html">nouislider</a></li>
-                                        <li><a class="sub-link" href="docs/form-passwordmeter.html">Password Meter</a>
-                                        </li>
-                                        <li><a class="sub-link" href="docs/form-rangeslider.html">Range Slider</a></li>
-                                        <li><a class="sub-link" href="docs/form-select2.html">Select 2</a></li>
-                                        <li><a class="sub-link" href="docs/form-sweetalert2.html">Sweetalert 2</a></li>
-                                        <li><a class="sub-link" href="docs/form-tagsinput.html">Tags input</a></li>
-                                        <li><a class="sub-link" href="docs/form-wizard.html">jQuery Steps Wizard</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="has-arrow" href="layout-v2.html#">Font icon</a>
-                                    <ul class="list-unstyled">
-                                        <li><a class="sub-link" href="docs/icon-fontawesome.html">Font awesome</a></li>
-                                        <li><a class="sub-link" href="docs/icon-bootstrap.html">Bootstrap Icon</a></li>
-                                        <li><a class="sub-link" href="docs/icon-flag.html">Country Flag icon</a></li>
-                                        <li><a class="sub-link" href="docs/icon-linear.html">Simple line icon</a></li>
-                                        <li><a class="sub-link" href="docs/icon-feather.html">Feather icon</a></li>
-                                        <li><a class="sub-link" href="docs/icon-weather.html">Weather icon</a></li>
-                                        <li><a class="sub-link" href="docs/icon-icons8.html">Icons8 icon</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="has-arrow" href="layout-v2.html#">Charts</a>
-                                    <ul class="list-unstyled">
-                                        <li><a class="sub-link" href="docs/chart-apex.html">Apex chart</a></li>
-                                        <li><a class="sub-link" href="docs/chart-sparkline.html">Sparkline</a></li>
-                                        <li><a class="sub-link" href="docs/chart-chartjs.html">Chartjs</a></li>
-                                        <li><a class="sub-link" href="docs/chart-knob.html">knob chart</a></li>
-                                        <li><a class="sub-link" href="docs/chart-peity.html">Peity chart</a></li>
-                                    </ul>
-                                </li>
+
                             </ul>
                         </div>
                         <div class="tab-pane fade" id="v1-authentication" role="tabpanel" tabindex="0">
@@ -223,10 +118,6 @@
                                 <li><a href="auth-signin.html">Sign in</a></li>
                                 <li><a href="auth-signup.html">Sign up</a></li>
                                 <li><a href="auth-password-reset.html">Reset Password</a></li>
-                                <li><a href="auth-two-step.html">2-step Verification</a></li>
-                                <li><a href="auth-lockscreen.html">Page Locked</a></li>
-                                <li><a href="auth-maintenance.html">Under Construction!</a></li>
-                                <li><a href="auth-404.html">404</a></li>
                             </ul>
                         </div>
                     </div>
@@ -296,10 +187,7 @@
                                         class="avatar xs me-2 opacity-50 theme-icon" fill="currentColor">
                                         <use href="#moon-stars-fill"></use>
                                     </svg> Dark</a></li>
-                            <li class="mb-1"><a class="dropdown-item" href="#" data-bs-theme-value="auto"><svg
-                                        class="avatar xs me-2 opacity-50 theme-icon" fill="currentColor">
-                                        <use href="#circle-half"></use>
-                                    </svg> Auto</a></li>
+                            <li class="mb-1"></li>
                             <li class="mb-1"><a class="dropdown-item" href="#" id="ThemeSettingToast"><svg
                                         class="avatar xs me-2 opacity-50 theme-icon" fill="currentColor">
                                         <use href="#theme-setting"></use>
@@ -327,38 +215,7 @@
                         </svg>
                     </li>
                     <!--[ Start:: user detail ]-->
-                    <li class="nav-item user ms-3">
-                        <a class="dropdown-toggle d-flex text-decoration-none align-items-center lh-sm p-0"
-                            href="index.html#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            title="User">
-                            <img class="avatar rounded-circle border border-3" src="~/assets/img/profile_av.png"
-                                alt="avatar">
-                            <span class="ms-2 fs-6 fw-medium text-body d-none d-sm-inline-flex">Henry Edwin</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end shadow p-4 rounded-4">
-                            <h6 class="mb-1">Henry Edwin</h6>
-                            <p class="small text-muted">Henry.glover@gmail.com</p>
-                            <input type="text" class="form-control form-control-sm" placeholder="Update my status">
-                            <ul class="list-unstyled mt-3">
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="my-wallet.html"><span class="align-middle">Balance:
-                                            <b>$864.6
-                                                K</b></span></a></li>
-                                <li><a class="dropdown-item" href="crafted-profile.html">My Profile</a></li>
-                                <li><a class="dropdown-item" href="my-task.html">My Taskboard</a></li>
-                                <li><a class="dropdown-item" href="app-chat.html">Messages</a></li>
-                                <li><a class="dropdown-item" href="account.html">Settings</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="index.html#">Add another account</a></li>
-                            </ul>
-                            <a class="btn py-2 btn-dark w-100 mt-3" href="auth-signin.html" role="button">Logout</a>
-                            <div class="mt-3 text-center small">
-                                <a class="text-muted me-1" href="index.html#!">Privacy policy</a>•<a
-                                    class="text-muted mx-1" href="index.html#!">Terms</a>•<a class="text-muted ms-1"
-                                    href="index.html#!">Cookies</a>
-                            </div>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
             <!--[ Start:: theme color setting ]-->
@@ -366,7 +223,7 @@
                 <div id="liveToast" class="toast border-0 rounded-4 shadow" role="alert" aria-live="assertive"
                     aria-atomic="true">
                     <div class="toast-header p-sm-3 rounded-4">
-                        <strong class="me-auto">Aqua App Settings</strong>
+                        <strong class="me-auto">Theme Settings</strong>
                         <button type="button" class="bg-transparent btn-close" data-bs-dismiss="toast"
                             aria-label="Close"></button>
                     </div>
@@ -397,32 +254,12 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="bg-light p-3 p-sm-4 rounded mb-3">
-                            <h6>More App Setting</h6>
-                            <div class="form-check monochrome-toggle">
-                                <input class="form-check-input fs-6" type="checkbox" role="switch" id="monochrome">
-                                <label class="form-check-label" for="monochrome">Monochrome Mode</label>
-                            </div>
-                            <div class="form-check gradient-active">
-                                <input class="form-check-input fs-6" type="checkbox" role="switch" id="gradient-active">
-                                <label class="form-check-label" for="gradient-active">Gradient Active</label>
-                            </div>
-                            <div class="form-check radius-toggle">
-                                <input class="form-check-input fs-6" type="checkbox" role="switch" id="radius0">
-                                <label class="form-check-label" for="radius0">Border Radius none</label>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <button type="button" class="btn w-100 me-1 py-2 btn-primary">Buy Now</button>
-                            <button type="button" class="btn w-100 ms-1 py-2 btn-dark">View Portfolio</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </header>
         <!--[ Start:: page body area ]-->
         <main class="page-body py-4">
-            <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
             @RenderBody()
         </main>
         <!--[ end:: main content-area ]-->
@@ -442,15 +279,15 @@
 
         <!--[ Jquery Core Js ]-->
         <script src="~/assets/js/theme.js"></script>
-        <!--[ Chart plugin url ]-->
         <script src="~/assets/bundles/apexcharts.bundle.js"></script>
-        <!--[ Forms url ]-->
-        <!--[ plugin url ]-->
         <script src="~/assets/bundles/purecounter.bundle.js"></script>
         <script src="~/assets/bundles/dataTables.bundle.js"></script>
         <script src="~/assets/vendor/purecounterjs/purecounter_vanilla.js"></script>
         <script src="~/assets/vendor/peity/jquery.peity.min.js"></script>
         <script src="~/assets/vendor/metismenu/metismenu.js"></script>
+
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
         @* Render page-specific scripts here *@
         @await RenderSectionAsync("Scripts", required: false)

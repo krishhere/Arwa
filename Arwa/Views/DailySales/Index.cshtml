@@ -17,7 +17,7 @@
             decimal totalPaid = Convert.ToDecimal(monthlyTotalSalesPaid);
             decimal monthlyTotalDebt = totalBilled - totalPaid;
             string monthlyTotalDebtStr = (Convert.ToDecimal(monthlyTotalSales) -
-            Convert.ToDecimal(monthlyTotalSalesPaid)).ToString("F2");
+            Convert.ToDecimal(monthlyTotalSalesPaid)).ToString("N2");
 
             <div class="col-xl-4 col-lg-4 col-md-12">
                 <div class="card">
@@ -26,7 +26,7 @@
                             <h5 class="mb-0 text-white">Total Bill Amount</h5>
                         </div>
                         <h2 class="mb-1 mt-3 text-white">
-                            <span class="purecounter">₹ @monthlyTotalSales</span>
+                            <span class="purecounter">₹ @totalBilled.ToString("N2")</span>
                         </h2>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                             <h5 class="mb-0 text-white">Total Bill Paid</h5>
                         </div>
                         <h2 class="mb-1 mt-3 text-white">
-                            <span class="purecounter text-success">₹ @monthlyTotalSalesPaid</span>
+                            <span class="purecounter text-success">₹ @totalPaid.ToString("N2")</span>
                         </h2>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Daily wise sales
+                    <h5 class="card-title mb-0">Day wise sales
                     </h5>
                     <div class="card-action">
                         @* <div class="dropdown">

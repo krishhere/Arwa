@@ -36,6 +36,7 @@ public class DailySalesController : Controller
         dataSet.Tables.Add(vendorNames);
 
         ViewBag.SalesHistory = dataSet;
+        ViewData["Title"] = "Monthly Sales";
         return View();
     }
     [HttpGet]
