@@ -1,0 +1,98 @@
+@using System.Data
+@model System.Data.DataTable
+
+@if (Model != null && Model.Rows.Count > 0)
+{
+    <table id="myDataTable_no_filter" class="table align-middle table-hover nowrap dataTable no-footer dtr-inline">
+        <thead>
+            <tr class="small text-muted text-uppercase">
+                <th>Prod. Manager</th>
+                <th>Vendor Name</th>
+                <th>Vendor Location</th>
+                <th>Vendor Phone</th>
+                <th>0.25L</th>
+                <th>0.5L</th>
+                <th>1L</th>
+                <th>2L</th>
+                <th>5L</th>
+                <th>20L</th>
+                <th>Amount Quoted</th>
+                <th>Amount Paid</th>
+                <th>Amount Pending</th>
+                <th>Billing Time</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr>
+                    <td>@row["Prod. Manager"]</td>
+                    <td>@row["Vendor Name"]</td>
+                    <td>@row["Vendor Location"]</td>
+                    <td>@row["Vendor Phone"]</td>
+                    <td>@row["0.25L"]</td>
+                    <td>@row["0.5L"]</td>
+                    <td>@row["1L"]</td>
+                    <td>@row["2L"]</td>
+                    <td>@row["5L"]</td>
+                    <td>@row["20L"]</td>
+                    <td>@row["Amount Billed"]</td>
+                    <td>@row["Amount Paid"]</td>
+                    <td>@row["Debt"]</td>
+                    <td>@row["BillingTime"]</td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Download invoice">
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+           @{
+    decimal totalBilled = Model.Rows.Cast<DataRow>()
+        .Sum(row => {
+            if (row["Amount Billed"] != DBNull.Value && decimal.TryParse(row["Amount Billed"].ToString(), out decimal val))
+            {
+                return val;
+            }
+            return 0m;
+        });
+
+    decimal totalPaid = Model.Rows.Cast<DataRow>()
+        .Sum(row => {
+            if (row["Amount Paid"] != DBNull.Value && decimal.TryParse(row["Amount Paid"].ToString(), out decimal val))
+            {
+                return val;
+            }
+            return 0m;
+        });
+
+    decimal totalDebt = Model.Rows.Cast<DataRow>()
+        .Sum(row => {
+            if (row["Debt"] != DBNull.Value && decimal.TryParse(row["Debt"].ToString(), out decimal val))
+            {
+                return val;
+            }
+            return 0m;
+        });
+}
+
+<tr class="table-primary fw-bold">
+    <td colspan="11" class="text-end">
+        Total:
+    </td>
+    <th class="text-success">@totalBilled.ToString("N2")</th>
+    <th class="text-success">@totalPaid.ToString("N2")</th>
+    <th class="text-danger">@totalDebt.ToString("N2")</th>
+    <td></td> 
+</tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No sales data available for the selected day.
+    </div>
+}

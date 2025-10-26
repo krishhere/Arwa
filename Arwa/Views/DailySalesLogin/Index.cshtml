@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <title>:: Aqua :: Sign In</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keyword" content="water supply management AQUA">
+    <link rel="icon" href="~/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="~/assets/vendor/metismenu/metismenu.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <script src="~/assets/js/plugins.js"></script>
+</head>
+
+<body class="aqua admin auth" data-aqua="theme-Mariner">
+    <div class="page d-flex flex-column">
+        <div class="page-title py-xl-5 bg-light text-center">
+            <div class="container-xxl">
+                <h2 class="text-gradient font-heading">Sign in - Daily Sales</h2>
+            </div>
+        </div>
+        <!--[ Start:: page body area ]-->
+        <main class="page-body py-xl-1 d-flex align-items-center" style="min-height:60vh;">
+            <div class="container-xxl">
+                <div class="row g-xl-4 g-lg-3 g-2 justify-content-center">
+                    <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <form asp-action="Index" asp-controller="DailySalesLogin" method="post">
+                                    <ul class="row g-3 list-unstyled li_animate mb-0">
+                                        <li class="col-12">
+                                            <div class="mb-2">
+                                                <label class="form-label">Email address</label>
+                                                <input type="text" name="username" class="form-control form-control-lg"
+                                                    placeholder="Enter admin name">
+                                            </div>
+                                        </li>
+                                        <li class="col-12">
+                                            <div class="mb-2">
+                                                <label class="form-label">Email Password</label>
+                                                <input type="password" name="password"
+                                                    class="form-control form-control-lg" placeholder="***************">
+                                            </div>
+                                        </li>
+                                        <li class="col-12 my-4">
+                                            <button type="submit" class="btn btn-lg btn-primary w-100 text-uppercase">
+                                                Sign In
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    @if (ViewBag.Error != null)
+                                    {
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            @ViewBag.Error
+                                        </div>
+                                    }
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--[ .row end ]-->
+            </div>
+        </main>
+        <!--[ Start:: page footer link copywrite ]-->
+        <footer class="page-footer py-4 mt-4 mt-auto">
+            <hr>
+            <div class="row text-center">
+                <p class="col-md-12 p-2 text-muted">Developed by Clinetra solutions Pvt.Ltd</p>
+            </div>
+        </footer>
+    </div>
+
+    <!--[ Jquery Page Js ]-->
+    <script src="~/assets/js/theme.js"></script>
+    <!--[ Chart plugin url ]-->
+    <!--[ Forms url ]-->
+    <!--[ plugin url ]-->
+    <script src="~/assets/vendor/metismenu/metismenu.js"></script>
+</body>
+
+</html>

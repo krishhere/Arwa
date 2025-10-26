@@ -1,0 +1,255 @@
+@using System.Data
+@{
+    Layout = "~/Views/Shared/_DailySalesLayout.cshtml";
+    DataSet dsSalesHistory = ViewBag.SalesHistory as DataSet;
+}
+
+<div class="container-fluid">
+    <h3 class="card-title pb-3 text-center">Sales History - <span
+            style="color: var(--primary-color); font-weight: bold; font-size: larger; ">@DateTime.Now.ToString("MMMM")</span>
+    </h3>
+    <div class="row g-3 row-deck">
+        @if (dsSalesHistory != null && dsSalesHistory.Tables["monthlyTotalSales"].Rows.Count > 0)
+        {
+            string monthlyTotalSales = @dsSalesHistory.Tables["monthlyTotalSales"].Rows[0]["Total Billed"].ToString();
+            string monthlyTotalSalesPaid = @dsSalesHistory.Tables["monthlyTotalSales"].Rows[0]["Total Paid"].ToString();
+            decimal totalBilled = Convert.ToDecimal(monthlyTotalSales);
+            decimal totalPaid = Convert.ToDecimal(monthlyTotalSalesPaid);
+            decimal monthlyTotalDebt = totalBilled - totalPaid;
+            string monthlyTotalDebtStr = (Convert.ToDecimal(monthlyTotalSales) -
+            Convert.ToDecimal(monthlyTotalSalesPaid)).ToString("F2");
+
+            <div class="col-xl-4 col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-header d-block bg-gradient-dark">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-0 text-white">Total Bill Amount</h5>
+                        </div>
+                        <h2 class="mb-1 mt-3 text-white">
+                            <span class="purecounter">₹ @monthlyTotalSales</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-header d-block bg-gradient-dark">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-0 text-white">Total Bill Paid</h5>
+                        </div>
+                        <h2 class="mb-1 mt-3 text-white">
+                            <span class="purecounter text-success">₹ @monthlyTotalSalesPaid</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-header d-block bg-gradient-dark">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-0 text-white">Total Debt</h5>
+                        </div>
+                        <h2 class="mb-1 mt-3 text-white">
+                            <span class="purecounter text-danger">₹ @monthlyTotalDebtStr</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Daily wise sales
+                    </h5>
+                    <div class="card-action">
+                        @* <div class="dropdown">
+                            <a href="layout-v2.html#" class="dropdown-toggle after-none gray-8"
+                                data-bs-toggle="dropdown" aria-expanded="false" title="Card Filter">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-opacity="0.4"
+                                        d="M1.5 0.5C1.5 0.367392 1.55268 0.240215 1.64645 0.146447C1.74021 0.0526784 1.86739 0 2 0H14C14.1326 0 14.2598 0.0526784 14.3536 0.146447C14.4473 0.240215 14.5 0.367392 14.5 0.5V4.5C14.5 4.62331 14.4544 4.74226 14.372 4.834L10 9.692V14.5C9.99992 14.6049 9.96685 14.7071 9.90547 14.7922C9.8441 14.8772 9.75752 14.9409 9.658 14.974L6.658 15.974C6.58287 15.999 6.50288 16.0058 6.4246 15.9939C6.34632 15.982 6.272 15.9516 6.20775 15.9053C6.1435 15.859 6.09116 15.7982 6.05504 15.7277C6.01893 15.6572 6.00006 15.5792 6 15.5V9.692L1.628 4.834C1.54561 4.74226 1.50002 4.62331 1.5 4.5V0.5ZM2.5 1V4.308L6.872 9.166C6.95439 9.25774 6.99998 9.37669 7 9.5V14.806L9 14.14V9.5C9.00002 9.37669 9.04561 9.25774 9.128 9.166L13.5 4.308V1H2.5Z">
+                                    </path>
+                                    <rect fill-opacity="0.9" x="4" y="2" width="8" height="3" rx="1"></rect>
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end shadow border-0 p-4 rounded-4"
+                                style="width: 300px;">
+                                <h6>Filter Options</h6>
+                                <div class="row g-3 mt-3">
+                                    <div class="col-12">
+                                        <label class="form-label small text-muted">Status:</label>
+                                        <select class="form-select">
+                                            <option selected="">Choose...</option>
+                                            @foreach (DataRow Vendor in dsSalesHistory.Tables["vendorNames"].Rows)
+                                            {
+                                                <option value="@Vendor["VendorId"]">@Vendor["Name"]</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-12 text-end mt-4">
+                                        <button type="submit" class="btn btn-sm btn-primary">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> *@
+                        <div class="dropdown">
+                            <a href="layout-v2.html#" class="card-fullscreen small" data-bs-toggle="tooltip"
+                                aria-label="Card Full Screen" data-bs-original-title="Card Full Screen">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="calendar-tab @@CardClass">
+                        <div id="scrollContainer" style="overflow-x: auto; white-space: nowrap;">
+                            <ul id="monthDays" class="nav nav-pills text-muted text-uppercase flex-nowrap mb-0"
+                                role="tablist" style="display: inline-flex;"></ul>
+                        </div>
+                        <script>
+                            const monthDays = document.getElementById("monthDays");
+                            const scrollContainer = document.getElementById("scrollContainer");
+                            const today = new Date();
+                            const year = today.getFullYear();
+                            const month = today.getMonth();
+                            const totalDays = new Date(year, month + 1, 0).getDate();
+                            const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+                            for (let d = 1; d <= totalDays; d++) {
+                                const date = new Date(year, month, d);
+                                const dayName = dayNames[date.getDay()];
+                                const isToday = d === today.getDate();
+
+                                const li = document.createElement("li");
+                                li.className = "nav-item px-2";
+                                li.setAttribute("role", "presentation");
+                                li.innerHTML = `
+                                    ${dayName}
+                                    <button class="nav-link ${isToday ? "active" : ""}" data-bs-toggle="pill"
+                                        data-bs-target="#c_date_${d}" type="button" role="tab"
+                                        aria-selected="${isToday}" tabindex="${isToday ? "0" : "-1"}">
+                                        ${String(d).padStart(2, "0")}
+                                    </button>
+                                    `;
+                                monthDays.appendChild(li);
+                            }
+                            window.addEventListener("load", () => {
+                                setTimeout(() => {
+                                    const activeBtn = document.querySelector("#monthDays .nav-link.active");
+                                    if (activeBtn) {
+                                        const offsetLeft = activeBtn.offsetLeft - scrollContainer.clientWidth / 2 + activeBtn.clientWidth / 2;
+                                        scrollContainer.scrollTo({ left: offsetLeft, behavior: "smooth" });
+                                    }
+                                }, 400);
+                            });
+                        </script>
+                    </div>
+                    <script>
+                        const scrollContainer = document.querySelector(".calendar-tab .nav");
+                        scrollContainer.addEventListener("wheel", (evt) => {
+                            evt.preventDefault();
+                            scrollContainer.scrollLeft += evt.deltaY;
+                        });
+                    </script>
+                    <hr>
+                    <div id="myDataTable_no_filter_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"
+                        style="overflow-y:auto;">
+                        <div class="d-flex justify-content-center">
+    <div class="row dt-row w-100 justify-content-center">
+        <div class="col-lg-5 col-md-6 col-sm-12 d-flex justify-content-center">
+                                <select class="form-select" id="vendorSelect">
+                                    <option selected="">Choose vendor name...</option>
+                                    @foreach (DataRow Vendor in dsSalesHistory.Tables["vendorNames"].Rows)
+                                    {
+                                        <option value="@Vendor["VendorId"]">@Vendor["Name"]</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-sm-12">
+                                @if (dsSalesHistory != null && dsSalesHistory.Tables["DailySales"].Rows.Count > 0)
+                                {
+                                    <div id="SalesHistoryPartialContainer">
+                                        @await Html.PartialAsync("~/Views/DailySales/Partials/_SalesHistoryPartial.cshtml",
+                                        dsSalesHistory.Tables["DailySales"])
+                                </div>
+                                                                }
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#monthDays .nav-link", function (e) {
+            e.preventDefault();
+            $('#vendorSelect').prop('selectedIndex', 0);
+            const selectedDay = $(this).text().trim();
+            const container = $('#SalesHistoryPartialContainer');
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            container.html('<div class="loader-container text-center"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div><p>Loading sales data for ' + selectedDay + '-' + month + '-' + year + '</p></div>');
+            const requestData = {
+                day: selectedDay
+            };
+            $.ajax({
+                url: '/DailySales/GetDataByDate',
+                type: 'GET',
+                data: requestData,
+                success: function (response) {
+                    container.html(response);
+                    console.log('Server response:', response);
+                },
+                error: function (xhr, status, error) {
+                    const errorMessage = '<div class="alert alert-danger" role="alert">Error loading data: ' + error + '</div>';
+                    container.html(errorMessage);
+                }
+            });
+        });
+
+        $(document).on("change", ".form-select", function (e) {
+            e.preventDefault();
+            const selectedVendorName = $(this).find("option:selected").text().trim();
+            const selectedDay = $("#monthDays .nav-link.active").text().trim();
+            const container = $('#SalesHistoryPartialContainer');
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+
+            if (selectedVendorName === "Choose vendor name...") {
+                container.html('<div class="alert alert-info" role="alert">Please select a vendor to view sales data.</div>');
+                return;
+            }
+
+            container.html(`
+                <div class="loader-container text-center">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p>Loading sales data for <strong>${selectedVendorName}</strong> (${selectedDay || 'All Days'}-${month}-${year})</p>
+                </div>
+            `);
+
+            const requestData = {
+                vendorName: selectedVendorName,
+                day: selectedDay || null
+            };
+
+            $.ajax({
+                url: '/DailySales/GetSalesDataBasedOnVendor',
+                type: 'GET',
+                data: requestData,
+                success: function (response) {
+                    container.html(response);
+                },
+                error: function (xhr, status, error) {
+                    container.html(`<div class="alert alert-danger">Error: ${error}</div>`);
+                }
+            });
+        });
+    });
+</script>
