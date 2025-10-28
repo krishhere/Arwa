@@ -8,7 +8,7 @@ public class DailySalesLoginController : Controller
 {
     public IActionResult Index()
     {
-        var user = HttpContext.Session.GetString("SalesUser");
+        var user = HttpContext.Session.GetString("ProductUser");
         if (!string.IsNullOrEmpty(user))
         {
             return RedirectToAction("Index", "DailySales");
@@ -20,10 +20,9 @@ public class DailySalesLoginController : Controller
     {
         if (username == "admin" && password == "admin")
         {
-            HttpContext.Session.SetString("SalesUser", username);
+            HttpContext.Session.SetString("ProductUser", username);
             return RedirectToAction("Index", "DailySales");
         }
-
         ViewBag.Error = "Invalid username or password.";
         return View();
     }

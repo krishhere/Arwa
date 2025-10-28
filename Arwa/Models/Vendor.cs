@@ -1,11 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+
 public class Vendor
 {
+    [Key]
     public int VendorId { get; set; }
-    public string Name { get; set; }
-    public string Location { get; set; }
-    public string Phone { get; set; }
-    public string Email { get; set; }
-    public DateTime? CreatedAt { get; set; }
 
-    public ICollection<WaterCan> WaterCans { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string Name { get; set; }
+
+    [Required]
+    [StringLength(250)]
+    public string Location { get; set; }
+
+    [Required]
+    [StringLength(10)]
+    public string Phone { get; set; }
+
+    [StringLength(100)]
+    public string Email { get; set; }
 }

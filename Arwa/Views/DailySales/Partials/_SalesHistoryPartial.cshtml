@@ -6,20 +6,20 @@
     <table id="myDataTable_no_filter" class="table align-middle table-hover nowrap dataTable no-footer dtr-inline">
         <thead>
             <tr class="small text-muted text-uppercase">
-                <th>Prod. Manager</th>
-                <th>Vendor Name</th>
-                <th>Vendor Location</th>
-                <th>Vendor Phone</th>
-                <th>0.25L</th>
-                <th>0.5L</th>
-                <th>1L</th>
-                <th>2L</th>
-                <th>5L</th>
-                <th>20L</th>
-                <th>Amount Quoted</th>
-                <th>Amount Paid</th>
-                <th>Amount Pending</th>
-                <th>Billing Time</th>
+                <th><span style="padding-right:20px;">Prod. Manager</span></th>
+                <th><span style="padding-right:20px;">Vendor Name</span></th>
+                <th><span style="padding-right:20px;">Vendor Location</span></th>
+                <th><span style="padding-right:20px;">Vendor Phone</span></th>
+                <th><span style="padding-right:20px;">0.25L</span></th>
+                <th><span style="padding-right:20px;">0.5L</span></th>
+                <th><span style="padding-right:20px;">1L</span></th>
+                <th><span style="padding-right:20px;">2L</span></th>
+                <th><span style="padding-right:20px;">5L</span></th>
+                <th><span style="padding-right:20px;">20L</span></th>
+                <th><span style="padding-right:20px;">Amount Quoted</span></th>
+                <th><span style="padding-right:20px;">Amount Paid</span></th>
+                <th><span style="padding-right:20px;">Amount Pending</span></th>
+                <th><span style="padding-right:20px;">Billing Time</span></th>
                 <th></th>
             </tr>
         </thead>
@@ -49,40 +49,40 @@
                     </td>
                 </tr>
             }
-            @{
-                decimal totalBilled = Model.Rows.Cast<DataRow>()
-                .Sum(row =>
-                {
-                    if (row["Amount Billed"] != DBNull.Value && decimal.TryParse(row["Amount Billed"].ToString(), out decimal val))
-                    {
-                        return val;
-                    }
-                    return 0m;
-                });
-
-                decimal totalPaid = Model.Rows.Cast<DataRow>()
-                .Sum(row =>
-                {
-                    if (row["Amount Paid"] != DBNull.Value && decimal.TryParse(row["Amount Paid"].ToString(), out decimal val))
-                    {
-                        return val;
-                    }
-                    return 0m;
-                });
-
-                decimal totalDebt = Model.Rows.Cast<DataRow>()
-                .Sum(row =>
-                {
-                    if (row["Debt"] != DBNull.Value && decimal.TryParse(row["Debt"].ToString(), out decimal val))
-                    {
-                        return val;
-                    }
-                    return 0m;
-                });
-            }
         </tbody>
     </table>
     <table class="table">
+        @{
+            decimal totalBilled = Model.Rows.Cast<DataRow>()
+            .Sum(row =>
+            {
+                if (row["Amount Billed"] != DBNull.Value && decimal.TryParse(row["Amount Billed"].ToString(), out decimal val))
+                {
+                    return val;
+                }
+                return 0m;
+            });
+
+            decimal totalPaid = Model.Rows.Cast<DataRow>()
+            .Sum(row =>
+            {
+                if (row["Amount Paid"] != DBNull.Value && decimal.TryParse(row["Amount Paid"].ToString(), out decimal val))
+                {
+                    return val;
+                }
+                return 0m;
+            });
+
+            decimal totalDebt = Model.Rows.Cast<DataRow>()
+            .Sum(row =>
+            {
+                if (row["Debt"] != DBNull.Value && decimal.TryParse(row["Debt"].ToString(), out decimal val))
+                {
+                    return val;
+                }
+                return 0m;
+            });
+        }
         <tr class="table-secondary fw-bold">
             <td>Total Quoted Amount: <span class="text-success">₹ @totalBilled.ToString("N2")</span></td>
             <td>Total Paid Amount: <span class="text-primary">₹ @totalPaid.ToString("N2")</span></td>

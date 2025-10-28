@@ -13,7 +13,7 @@ public class DbData : DbContext
     {
         DateTime today = DateTime.Today;
         string formattedDate = today.ToString($"yyyy-MM-{day}");
-        var sql = @"SELECT pm.Name AS `Prod. Manager`,v.Name AS `Vendor Name`,v.Location AS `Vendor Location`,v.Phone AS `Vendor Phone`,wc.Cases025Ltr AS `0.25L`, wc.Cases05Ltr AS `0.5L`, wc.Cases1Ltr AS `1L`, wc.Cases2Ltr AS `2L`, wc.Cases5Ltr AS `5L`, wc.Cases20Ltr AS `20L`, b.AmountBilled AS `Amount Billed`, b.AmountPaid AS `Amount Paid`, (b.AmountBilled - b.AmountPaid) AS `Debt`,TIME(b.BillingDate) as BillingTime FROM WaterCan wc INNER JOIN ProdManagers pm ON wc.ProdManagerId = pm.ProdManagerId INNER JOIN Vendors v ON wc.VendorId = v.VendorId INNER JOIN Billing b ON wc.WaterCanId = b.WaterCanId WHERE DATE(b.BillingDate) = @BillingDate";
+        var sql = @"SELECT pm.Name AS `Prod. Manager`, v.Name AS `Vendor Name`, v.Location AS `Vendor Location`, v.Phone AS `Vendor Phone`, wc.Cases025Ltr AS `0.25L`, wc.Cases05Ltr AS `0.5L`, wc.Cases1Ltr AS `1L`, wc.Cases2Ltr AS `2L`, wc.Cases5Ltr AS `5L`, wc.Cases20Ltr AS `20L`, wc.AmountBilled AS `Amount Billed`, wc.AmountPaid AS `Amount Paid`, (wc.AmountBilled - wc.AmountPaid) AS `Debt`, TIME(wc.BillingDate) AS BillingTime FROM WaterCanOrders wc INNER JOIN ProdManagers pm ON wc.ProdManagerId = pm.ProdManagerId INNER JOIN Vendors v ON wc.VendorId = v.VendorId WHERE DATE(wc.BillingDate) = @BillingDate";
         var dt = new DataTable();
         using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
         {
@@ -51,7 +51,7 @@ public class DbData : DbContext
     {
         var dt = new DataTable();
         string sql = @"SELECT SUM(AmountBilled) AS 'Total Billed', SUM(AmountPaid) AS 'Total Paid' 
-        FROM billing WHERE YEAR(BillingDate) = @Year AND MONTH(BillingDate) = @Month";
+        FROM WaterCanOrders WHERE YEAR(BillingDate) = @Year AND MONTH(BillingDate) = @Month";
         using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
         {
             try
@@ -112,7 +112,7 @@ public class DbData : DbContext
     {
         DateTime today = DateTime.Today;
         string formattedDate = today.ToString($"yyyy-MM-{day}");
-        var sql = @"SELECT pm.Name AS `Prod. Manager`,v.Name AS `Vendor Name`,v.Location AS `Vendor Location`,v.Phone AS `Vendor Phone`,wc.Cases025Ltr AS `0.25L`, wc.Cases05Ltr AS `0.5L`, wc.Cases1Ltr AS `1L`, wc.Cases2Ltr AS `2L`, wc.Cases5Ltr AS `5L`, wc.Cases20Ltr AS `20L`, b.AmountBilled AS `Amount Billed`, b.AmountPaid AS `Amount Paid`, (b.AmountBilled - b.AmountPaid) AS `Debt`,TIME(b.BillingDate) as BillingTime FROM WaterCan wc INNER JOIN ProdManagers pm ON wc.ProdManagerId = pm.ProdManagerId INNER JOIN Vendors v ON wc.VendorId = v.VendorId INNER JOIN Billing b ON wc.WaterCanId = b.WaterCanId WHERE DATE(b.BillingDate) = @BillingDate and v.Name = @VendorName";
+        var sql = @"SELECT pm.Name AS `Prod. Manager`, v.Name AS `Vendor Name`, v.Location AS `Vendor Location`, v.Phone AS `Vendor Phone`, wc.Cases025Ltr AS `0.25L`, wc.Cases05Ltr AS `0.5L`, wc.Cases1Ltr AS `1L`, wc.Cases2Ltr AS `2L`, wc.Cases5Ltr AS `5L`, wc.Cases20Ltr AS `20L`, wc.AmountBilled AS `Amount Billed`, wc.AmountPaid AS `Amount Paid`, (wc.AmountBilled - wc.AmountPaid) AS `Debt`, TIME(wc.BillingDate) AS BillingTime FROM WaterCanOrders wc INNER JOIN ProdManagers pm ON wc.ProdManagerId = pm.ProdManagerId INNER JOIN Vendors v ON wc.VendorId = v.VendorId WHERE DATE(wc.BillingDate) = @BillingDate and v.Name = @VendorName";
         var dt = new DataTable();
         using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
         {
@@ -150,6 +150,94 @@ public class DbData : DbContext
             }
         }
         return dt;
+    }
+    public string IsValidProdManager(string email, string password)
+    {
+        string ProdManagerId = string.Empty;
+        var sql = @"SELECT ProdManagerId FROM ProdManagers where upper(name) = upper(@name) AND password = @Password AND ROLE='PM'";
+        using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    var emailParam = cmd.CreateParameter();
+                    emailParam.ParameterName = "@name";
+                    emailParam.Value = email;
+                    cmd.Parameters.Add(emailParam);
+                    var passwordParam = cmd.CreateParameter();
+                    passwordParam.ParameterName = "@Password";
+                    passwordParam.Value = password;
+                    cmd.Parameters.Add(passwordParam);
+                    var result = cmd.ExecuteScalar();
+                    ProdManagerId = (result != null && result != DBNull.Value) ? result.ToString() : string.Empty;
+                }
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+            return ProdManagerId;
+        }
+    }
+    public DataTable GetSalesPersons()
+    {
+        var dt = new DataTable();
+        string sql = @"SELECT DISTINCT SalesPersonId, Name FROM SalesPersons";
+        using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
+        {
+            try
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        dt.Load(reader);
+                    }
+                }
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+        return dt;
+    }
+    public async Task AddVendorAndOrder(Vendor vendor, WaterCanOrders order)
+    {
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            _context.Vendors.Add(vendor);
+            await _context.SaveChangesAsync();
+
+            order.VendorId = vendor.VendorId;
+            order.BillingDate = DateTime.Now;
+            _context.WaterCanOrders.Add(order);
+            await _context.SaveChangesAsync();
+
+            await transaction.CommitAsync();
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
 }

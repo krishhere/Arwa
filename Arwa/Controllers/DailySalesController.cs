@@ -2,7 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Arwa.Models;
 using System.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Arwa.Controllers;
 
@@ -16,7 +15,7 @@ public class DailySalesController : Controller
     }
     public IActionResult Index()
     {
-        var user = HttpContext.Session.GetString("SalesUser");
+        var user = HttpContext.Session.GetString("ProductUser");
         if (string.IsNullOrEmpty(user))
         {
             return View("~/Views/DailySalesLogin/Index.cshtml");
@@ -53,7 +52,7 @@ public class DailySalesController : Controller
     }
     public IActionResult Logout()
     {
-        HttpContext.Session.Remove("SalesUser");
+        HttpContext.Session.Remove("ProductUser");
         return View("DailySalesLogin");
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

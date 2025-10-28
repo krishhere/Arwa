@@ -1,0 +1,195 @@
+@using System.Data
+@{
+  Layout = "~/Views/Shared/_SalesLayout.cshtml";
+}
+<div class="container-fluid">
+  <div class="row g-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Invoice List</h5>
+          <div class="d-flex">
+            <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#create_project">Create
+              an order</button>
+          </div>
+          @* Filter *@
+          <div class="card-action">
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle after-none gray-8" data-bs-toggle="dropdown" aria-expanded="false"
+                title="Card Filter">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-opacity="0.4"
+                    d="M1.5 0.5C1.5 0.367392 1.55268 0.240215 1.64645 0.146447C1.74021 0.0526784 1.86739 0 2 0H14C14.1326 0 14.2598 0.0526784 14.3536 0.146447C14.4473 0.240215 14.5 0.367392 14.5 0.5V4.5C14.5 4.62331 14.4544 4.74226 14.372 4.834L10 9.692V14.5C9.99992 14.6049 9.96685 14.7071 9.90547 14.7922C9.8441 14.8772 9.75752 14.9409 9.658 14.974L6.658 15.974C6.58287 15.999 6.50288 16.0058 6.4246 15.9939C6.34632 15.982 6.272 15.9516 6.20775 15.9053C6.1435 15.859 6.09116 15.7982 6.05504 15.7277C6.01893 15.6572 6.00006 15.5792 6 15.5V9.692L1.628 4.834C1.54561 4.74226 1.50002 4.62331 1.5 4.5V0.5ZM2.5 1V4.308L6.872 9.166C6.95439 9.25774 6.99998 9.37669 7 9.5V14.806L9 14.14V9.5C9.00002 9.37669 9.04561 9.25774 9.128 9.166L13.5 4.308V1H2.5Z">
+                  </path>
+                  <rect fill-opacity="0.9" x="4" y="2" width="8" height="3" rx="1"></rect>
+                </svg>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end shadow border-0 p-4 rounded-4" style="width: 300px;">
+                <h6>Filter Options</h6>
+                <div class="row g-3 mt-3">
+                  <div class="col-12">
+                    <label class="form-label small text-muted">Sorted by:</label>
+                    <input type="email" class="form-control" placeholder="Search">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small text-muted">Status:</label>
+                    <select class="form-select">
+                      <option selected="">Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+                  <div class="col-12 text-end mt-4">
+                    <button type="submit" class="btn btn-sm btn-primary">Apply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+            <div class="row dt-row">
+              <div class="col-sm-12">
+                <table class="table table-hover custom-table my_data_table nowrap dataTable no-footer dtr-inline"
+                  id="DataTables_Table_0" style="width: 1076px;">
+                  <thead>
+                    <tr class="text-muted small text-uppercase">
+                      <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                        colspan="1" style="width: 73px;" aria-sort="ascending"
+                        aria-label="#: activate to sort column descending">#</th>
+                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                        style="width: 185px;" aria-label="Client name: activate to sort column ascending">Client name
+                      </th>
+                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                        style="width: 235px;" aria-label="Email: activate to sort column ascending">Email</th>
+                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                        style="width: 95px;" aria-label="Amount: activate to sort column ascending">Amount</th>
+                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                        style="width: 83px;" aria-label="Status: activate to sort column ascending">Status</th>
+                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                        style="width: 129px;" aria-label="Action: activate to sort column ascending">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="odd">
+                      <td class="dtr-control sorting_1" tabindex="0">
+                        <span>#M0001</span>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img class="avatar sm rounded-circle me-2" src="assets/img/xs/avatar1.jpg"
+                            data-toggle="tooltip" data-placement="top" alt="Avatar" aria-label="Avatar Name"
+                            data-bs-original-title="Avatar Name">
+                          <a href="#" title="">South
+                            Shyanne</a>
+                        </div>
+                      </td>
+                      <td>south.shyanne@info.com</td>
+                      <td>$1200</td>
+                      <td><span class="badge bg-success">Done</span></td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-default " title="Print"><i
+                            class="fa fa-print"></i></button>
+                      </td>
+                    </tr>
+                    <tr class="even">
+                      <td class="dtr-control sorting_1" tabindex="0">
+                        <span>#M0002</span>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img class="avatar sm rounded-circle me-2" src="assets/img/xs/avatar2.jpg"
+                            data-toggle="tooltip" data-placement="top" alt="Avatar" aria-label="Avatar Name"
+                            data-bs-original-title="Avatar Name">
+                          <a href="https://puffintheme.com/themeforest/aqua/dist/page-invoices-detail.html" title="">Zoe
+                            Baker</a>
+                        </div>
+                      </td>
+                      <td>zoe.baker@info.com</td>
+                      <td>$378</td>
+                      <td><span class="badge bg-success">Done</span></td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-default " title="Print"><i
+                            class="fa fa-print"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $('.my_data_table').addClass('nowrap').dataTable({
+            responsive: true,
+            searching: false,
+            paging: false,
+            info: false,
+          });
+          $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+          });
+        });
+      </script>
+    </div>
+  </div> <!--[ .row end ]-->
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('#btnCreate').click(function () {
+      var vendorOrderData = {
+        Vendor: {
+          Name: $('#Name').val(),
+          Location: $('#Location').val(),
+          Phone: $('#Phone').val(),
+          Email: $('#Email').val()
+        },
+        WaterCanOrder: {
+          ProdManagerId: parseInt($('#ProdManagerId').text()) || 0,
+          SalesPersonId: parseInt($('#SalesPersonId').val()) || 0,
+          Cases025Ltr: parseInt($('#Cases025Ltr').val()) || 0,
+          Cases05Ltr: parseInt($('#Cases05Ltr').val()) || 0,
+          Cases1Ltr: parseInt($('#Cases1Ltr').val()) || 0,
+          Cases2Ltr: parseInt($('#Cases2Ltr').val()) || 0,
+          Cases5Ltr: parseInt($('#Cases5Ltr').val()) || 0,
+          Cases20Ltr: parseInt($('#Cases20Ltr').val()) || 0,
+          AmountBilled: parseFloat($('#AmountBilled').val()) || 0,
+          AmountPaid: parseFloat($('#AmountPaid').val()) || 0
+        }
+      };
+      if (!vendorOrderData.Vendor.Name || !vendorOrderData.Vendor.Phone) {
+        alert('Vendor Name and Phone are required.');
+        return;
+      }
+      $.ajax({
+        url: '/Sales/CreateVendorOrder',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(vendorOrderData),
+        success: function (response) {
+          $('#vendorOrderForm')[0].reset();
+          var vendorName = $('#Name').val();
+          $('#CreateOrderMsg')
+            .removeClass('d-none alert-danger')
+            .addClass('alert-success')
+            .text('Order is created for ' + vendorName + '!')
+            .fadeIn();
+          setTimeout(function () {
+            $('#CreateOrderMsg').fadeOut();
+          }, 4000);
+        },
+        error: function (xhr) {
+          $('#CreateOrderMsg')
+            .removeClass('d-none alert-success')
+            .addClass('alert-danger')
+            .text('Something went wrong: ' + xhr.responseText)
+            .fadeIn();
+        }
+      });
+    });
+  });
+</script>

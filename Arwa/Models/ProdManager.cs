@@ -7,5 +7,4 @@ public class ProdManager
     public string Location { get; set; }
     public DateTime? CreatedAt { get; set; }
 
-    public ICollection<WaterCan> WaterCans { get; set; }
 }

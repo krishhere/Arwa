@@ -2,6 +2,7 @@
 @{
     Layout = "~/Views/Shared/_DailySalesLayout.cshtml";
     DataSet dsSalesHistory = ViewBag.SalesHistory as DataSet;
+    int cnt = dsSalesHistory.Tables["monthlyTotalSales"].Rows.Count;
 }
 
 <div class="container-fluid">
@@ -94,7 +95,7 @@
                             </div>
                         </div> *@
                         <div class="dropdown">
-                            <a href="layout-v2.html#" class="card-fullscreen small" data-bs-toggle="tooltip"
+                            <a href="#" class="card-fullscreen small" data-bs-toggle="tooltip"
                                 aria-label="Card Full Screen" data-bs-original-title="Card Full Screen">
                                 <i class="fa fa-expand"></i>
                             </a>
@@ -156,26 +157,27 @@
                     <div id="myDataTable_no_filter_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"
                         style="overflow-y:auto;">
                         <div class="d-flex justify-content-center">
-    <div class="row dt-row w-100 justify-content-center">
-        <div class="col-lg-5 col-md-6 col-sm-12 d-flex justify-content-center">
-                                <select class="form-select" id="vendorSelect">
-                                    <option selected="">Choose vendor name...</option>
-                                    @foreach (DataRow Vendor in dsSalesHistory.Tables["vendorNames"].Rows)
-                                    {
-                                        <option value="@Vendor["VendorId"]">@Vendor["Name"]</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-sm-12">
-                                @if (dsSalesHistory != null && dsSalesHistory.Tables["DailySales"].Rows.Count > 0)
-                                {
-                                    <div id="SalesHistoryPartialContainer">
-                                        @await Html.PartialAsync("~/Views/DailySales/Partials/_SalesHistoryPartial.cshtml",
-                                        dsSalesHistory.Tables["DailySales"])
+                            <div class="row dt-row w-100 justify-content-center">
+                                <div class="col-lg-5 col-md-6 col-sm-12 d-flex justify-content-center">
+                                    <select class="form-select" id="vendorSelect">
+                                        <option selected="">Choose vendor name...</option>
+                                        @foreach (DataRow Vendor in dsSalesHistory.Tables["vendorNames"].Rows)
+                                        {
+                                            <option value="@Vendor["VendorId"]">@Vendor["Name"]</option>
+                                        }
+                                    </select>
                                 </div>
-                                                                }
+                                <div class="col-12">
+                                    @* @if (dsSalesHistory != null && dsSalesHistory.Tables["DailySales"].Rows.Count > 0)
+                                { *@
+                                    <div id="SalesHistoryPartialContainer">
+                                        @await Html.PartialAsync(
+                                        "~/Views/DailySales/Partials/_SalesHistoryPartial.cshtml",
+                                                                                dsSalesHistory.Tables["DailySales"])
+                                    </div>
+                                    @* } *@
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -191,10 +193,12 @@
             $('#vendorSelect').prop('selectedIndex', 0);
             const selectedDay = $(this).text().trim();
             const container = $('#SalesHistoryPartialContainer');
+            console.log("Clicked day:", selectedDay, "Container found:", container.length);
+
             const today = new Date();
             const year = today.getFullYear();
             const month = today.getMonth();
-            container.html('<div class="loader-container text-center"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div><p>Loading sales data for ' + selectedDay + '-' + month + '-' + year + '</p></div>');
+            $('#SalesHistoryPartialContainer').html('<div class="loader-container text-center"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div><p>Loading sales data for ' + selectedDay + '-' + month + '-' + year + '</p></div>');
             const requestData = {
                 day: selectedDay
             };
@@ -204,7 +208,6 @@
                 data: requestData,
                 success: function (response) {
                     container.html(response);
-                    console.log('Server response:', response);
                 },
                 error: function (xhr, status, error) {
                     const errorMessage = '<div class="alert alert-danger" role="alert">Error loading data: ' + error + '</div>';
