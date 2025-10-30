@@ -18,7 +18,9 @@ public class SalesController : Controller
         {
             return RedirectToAction("Index", "SalesLogin");
         }
+        var id = HttpContext.Session.GetString("ProdManagerId");
         ViewBag.SalesPerson = _dbData.GetSalesPersons();
+        ViewBag.ProdManagerOrders = _dbData.GetProdManagerOrders(id);
         return View();
     }
     [HttpPost]

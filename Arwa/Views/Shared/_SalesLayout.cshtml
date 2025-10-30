@@ -506,14 +506,19 @@
         <div class="col-12 pt-4">
           <div class="alert alert-success d-none" id="CreateOrderMsg" role="alert"></div>
         </div>
+        <div class="col-12 pt-4">
+          <div class="input-group">
+            <input type="text" class="form-control" id="clipboard-input" value="url">
+            <button class="btn btn-outline-secondary" type="button" data-clipboard-target="#clipboard-input"><i
+                class="fa fa-copy me-2"></i>Copy</button>
+            <button class="btn btn-outline-primary" type="button"><i class="fa fa-whatsapp me-2"></i></button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
   <!--[ Jquery Core Js ]-->
   <script src="~/assets/js/theme.js"></script>
-  <!--[ Chart plugin url ]-->
-  <!--[ Forms url ]-->
-  <!--[ plugin url ]-->
   <script src="~/assets/bundles/owlcarousel.bundle.js"></script>
   <script src="~/assets/bundles/dataTables.bundle.js"></script>
   <script src="~/assets/vendor/metismenu/metismenu.js"></script>
@@ -522,7 +527,6 @@
   @* <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script> *@
 
-  @* Render page-specific scripts here *@
   @await RenderSectionAsync("Scripts", required: false)
   </div>
 </body>

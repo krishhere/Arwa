@@ -1,7 +1,33 @@
 @using System.Data
 @{
   Layout = "~/Views/Shared/_SalesLayout.cshtml";
+  DataTable prodManagerOrders = ViewBag.ProdManagerOrders as DataTable;
 }
+<style>
+  .phone-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+  }
+
+  .phone-popup a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .phone-popup a:hover {
+    text-decoration: underline;
+  }
+</style>
 <div class="container-fluid">
   <div class="row g-3">
     <div class="col-12">
@@ -9,7 +35,7 @@
         <div class="card-header">
           <h5 class="card-title mb-0">Invoice List</h5>
           <div class="d-flex">
-            <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="offcanvas"
               data-bs-target="#create_project">Create
               an order</button>
           </div>
@@ -51,95 +77,174 @@
           <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
             <div class="row dt-row">
               <div class="col-sm-12">
-                <table class="table table-hover custom-table my_data_table nowrap dataTable no-footer dtr-inline"
-                  id="DataTables_Table_0" style="width: 1076px;">
-                  <thead>
-                    <tr class="text-muted small text-uppercase">
-                      <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                        colspan="1" style="width: 73px;" aria-sort="ascending"
-                        aria-label="#: activate to sort column descending">#</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                        style="width: 185px;" aria-label="Client name: activate to sort column ascending">Client name
-                      </th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                        style="width: 235px;" aria-label="Email: activate to sort column ascending">Email</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                        style="width: 95px;" aria-label="Amount: activate to sort column ascending">Amount</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                        style="width: 83px;" aria-label="Status: activate to sort column ascending">Status</th>
-                      <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                        style="width: 129px;" aria-label="Action: activate to sort column ascending">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd">
-                      <td class="dtr-control sorting_1" tabindex="0">
-                        <span>#M0001</span>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img class="avatar sm rounded-circle me-2" src="assets/img/xs/avatar1.jpg"
-                            data-toggle="tooltip" data-placement="top" alt="Avatar" aria-label="Avatar Name"
-                            data-bs-original-title="Avatar Name">
-                          <a href="#" title="">South
-                            Shyanne</a>
-                        </div>
-                      </td>
-                      <td>south.shyanne@info.com</td>
-                      <td>$1200</td>
-                      <td><span class="badge bg-success">Done</span></td>
-                      <td>
-                        <button type="button" class="btn btn-sm btn-default " title="Print"><i
-                            class="fa fa-print"></i></button>
-                      </td>
-                    </tr>
-                    <tr class="even">
-                      <td class="dtr-control sorting_1" tabindex="0">
-                        <span>#M0002</span>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img class="avatar sm rounded-circle me-2" src="assets/img/xs/avatar2.jpg"
-                            data-toggle="tooltip" data-placement="top" alt="Avatar" aria-label="Avatar Name"
-                            data-bs-original-title="Avatar Name">
-                          <a href="https://puffintheme.com/themeforest/aqua/dist/page-invoices-detail.html" title="">Zoe
-                            Baker</a>
-                        </div>
-                      </td>
-                      <td>zoe.baker@info.com</td>
-                      <td>$378</td>
-                      <td><span class="badge bg-success">Done</span></td>
-                      <td>
-                        <button type="button" class="btn btn-sm btn-default " title="Print"><i
-                            class="fa fa-print"></i></button>
-                      </td>
-                    </tr>
-                  </tbody>
+                <table class="table">
+                  @{
+                    decimal totalBilled = prodManagerOrders.Rows.Cast<DataRow>()
+                    .Sum(row =>
+                    {
+                      if (row["Amount Billed"] != DBNull.Value && decimal.TryParse(row["Amount Billed"].ToString(), out
+                                      decimal val))
+                      {
+                        return val;
+                      }
+                      return 0m;
+                    });
+
+                    decimal totalPaid = prodManagerOrders.Rows.Cast<DataRow>()
+                    .Sum(row =>
+                    {
+                      if (row["Amount Paid"] != DBNull.Value && decimal.TryParse(row["Amount Paid"].ToString(), out decimal
+                                      val))
+                      {
+                        return val;
+                      }
+                      return 0m;
+                    });
+
+                    decimal totalDebt = prodManagerOrders.Rows.Cast<DataRow>()
+                    .Sum(row =>
+                    {
+                      if (row["Debt"] != DBNull.Value && decimal.TryParse(row["Debt"].ToString(), out decimal val))
+                      {
+                        return val;
+                      }
+                      return 0m;
+                    });
+                  }
+                  <tr class="table-secondary fw-bold">
+                    <td>Total Quoted Amount: <span class="text-success">₹ @totalBilled.ToString("N2")</span></td>
+                    <td>Total Paid Amount: <span class="text-primary">₹ @totalPaid.ToString("N2")</span></td>
+                    <td>Total Pending Amount: <span class="text-danger">₹ @totalDebt.ToString("N2")</span></td>
+                  </tr>
                 </table>
+                <div class="table-responsive">
+                  <table id="myDataTable_no_filter"
+                    class="table align-middle table-hover nowrap dataTable no-footer dtr-inline">
+                    <thead>
+                      <tr class="small text-muted text-uppercase">
+                        <th><span style="padding-right:20px;">Vendor Name</th>
+                        <th><span style="padding-right:20px;">Vendor Location</th>
+                        <th><span style="padding-right:20px;">0.25L</th>
+                        <th><span style="padding-right:20px;">0.5L</th>
+                        <th><span style="padding-right:20px;">1L</th>
+                        <th><span style="padding-right:20px;">2L</th>
+                        <th><span style="padding-right:20px;">5L</th>
+                        <th><span style="padding-right:20px;">20L</th>
+                        <th><span style="padding-right:20px;">Amount Paid</th>
+                        <th><span style="padding-right:20px;">Amount Pending</th>
+                        <th><span style="padding-right:20px;">Billing Time</th>
+                        <th><span style="padding-right:20px;">Status</th>
+                        <th><span style="padding-right:20px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @if (prodManagerOrders != null)
+                      {
+                        foreach (DataRow row in prodManagerOrders.Rows)
+                        {
+                          <tr>
+                            <span style="display: none;">@row["Prod. Manager"]</span>
+                            <td class="vendor-cell" style="position: relative;">
+                              <a href="javascript:void(0);" class="vendor-name text-primary"
+                                onclick="togglePhonePopup(this, '@row["Vendor Phone"]')">
+                                @row["Vendor Name"]
+                              </a>
+                            </td>
+                            <td>@row["Vendor Location"]</td>
+                            <td>@row["0.25L"]</td>
+                            <td>@row["0.5L"]</td>
+                            <td>@row["1L"]</td>
+                            <td>@row["2L"]</td>
+                            <td>@row["5L"]</td>
+                            <td>@row["20L"]</td>
+                            <td>@row["Amount Paid"]</td>
+                            <td>@row["Debt"]</td>
+                            <td>@Convert.ToDateTime(row["BillingTime"]).ToString("dd-MMM-yyyy HH:mm")</td>
+                            <td>
+                              @{
+                                string status = row["OrderStatus"].ToString();
+                              }
+                              @if (status == "Pending")
+                              {
+                                <span class="badge bg-warning">Pending</span>
+                              }
+                              else if (status == "Collected")
+                              {
+                                <span class="badge bg-success">Completed</span>
+                              }
+                              else if (status == "Return")
+                              {
+                                <span class="badge bg-info">Returned</span>
+                              }
+                              else
+                              {
+                                <span class="badge bg-secondary">@status</span>
+                              }
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Share bill">
+                                <i class="fa fa-share"></i>
+                              </button>
+                              <button type="button" class="btn btn-sm btn-default" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Share link"><i class="fa fa-eye"></i></button>
+                            </td>
+                          </tr>
+                        }
+                      }
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <script>
-        $(document).ready(function () {
-          $('.my_data_table').addClass('nowrap').dataTable({
-            responsive: true,
-            searching: false,
-            paging: false,
-            info: false,
-          });
-          $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
-          });
-        });
-      </script>
+
     </div>
   </div> <!--[ .row end ]-->
 </div>
 
 <script>
+  function togglePhonePopup(element, phone) {
+    // Close any other open popups first
+    document.querySelectorAll('.phone-popup').forEach(p => p.remove());
+
+    // Check if this one was already open
+    const existingPopup = element.parentNode.querySelector('.phone-popup');
+    if (existingPopup) {
+      existingPopup.remove();
+      return;
+    }
+
+    // Create popup
+    const popup = document.createElement('div');
+    popup.className = 'phone-popup';
+    popup.innerHTML = `📞 <a href="tel:${phone}">${phone}</a>`;
+    element.parentNode.appendChild(popup);
+    popup.style.display = 'block';
+  }
+
+  // Close popup when clicking anywhere else
+  document.addEventListener('click', function (e) {
+    const isVendorCell = e.target.closest('.vendor-cell');
+    if (!isVendorCell) {
+      document.querySelectorAll('.phone-popup').forEach(p => p.remove());
+    }
+  });
   $(document).ready(function () {
+    if (!$.fn.DataTable.isDataTable('#myDataTable_no_filter')) {
+      $('#myDataTable_no_filter').DataTable({
+        paging: false,
+        searching: false,
+        info: false,
+        ordering: true,
+        order: [],
+        columnDefs: [
+          { orderable: false, targets: -1 }
+        ]
+      });
+    }
     $('#btnCreate').click(function () {
       var vendorOrderData = {
         Vendor: {
