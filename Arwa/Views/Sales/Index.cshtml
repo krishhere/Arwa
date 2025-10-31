@@ -122,18 +122,19 @@
                     class="table align-middle table-hover nowrap dataTable no-footer dtr-inline">
                     <thead>
                       <tr class="small text-muted text-uppercase">
+                        <th style="display:none;">Hidden Data</th>
+                        <th><span style="padding-right:20px;">Status</th>
                         <th><span style="padding-right:20px;">Vendor Name</th>
-                        <th><span style="padding-right:20px;">Vendor Location</th>
-                        <th><span style="padding-right:20px;">0.25L</th>
+                        <th><span style="padding-right:20px;">Location</th>
+                        <th><span style="padding-right:15px;">0.25L</th>
                         <th><span style="padding-right:20px;">0.5L</th>
                         <th><span style="padding-right:20px;">1L</th>
                         <th><span style="padding-right:20px;">2L</th>
                         <th><span style="padding-right:20px;">5L</th>
                         <th><span style="padding-right:20px;">20L</th>
-                        <th><span style="padding-right:20px;">Amount Paid</th>
-                        <th><span style="padding-right:20px;">Amount Pending</th>
+                        <th><span style="padding-right:20px;">Paid</th>
+                        <th><span style="padding-right:20px;">Debt</th>
                         <th><span style="padding-right:20px;">Billing Time</th>
-                        <th><span style="padding-right:20px;">Status</th>
                         <th><span style="padding-right:20px;"></th>
                       </tr>
                     </thead>
@@ -142,28 +143,14 @@
                       {
                         foreach (DataRow row in prodManagerOrders.Rows)
                         {
+                          int orderId = Convert.ToInt32(row["WaterCanOrderId"]);
+                          string status = row["OrderStatus"].ToString();
                           <tr>
-                            <span style="display: none;">@row["Prod. Manager"]</span>
-                            <td class="vendor-cell" style="position: relative;">
-                              <a href="javascript:void(0);" class="vendor-name text-primary"
-                                onclick="togglePhonePopup(this, '@row["Vendor Phone"]')">
-                                @row["Vendor Name"]
-                              </a>
+                            <td style="display:none;">
+                              <span class="prod-manager">@row["Prod. Manager"]</span>
+                              <span id="OrderId_@orderId">@orderId</span>
                             </td>
-                            <td>@row["Vendor Location"]</td>
-                            <td>@row["0.25L"]</td>
-                            <td>@row["0.5L"]</td>
-                            <td>@row["1L"]</td>
-                            <td>@row["2L"]</td>
-                            <td>@row["5L"]</td>
-                            <td>@row["20L"]</td>
-                            <td>@row["Amount Paid"]</td>
-                            <td>@row["Debt"]</td>
-                            <td>@Convert.ToDateTime(row["BillingTime"]).ToString("dd-MMM-yyyy HH:mm")</td>
                             <td>
-                              @{
-                                string status = row["OrderStatus"].ToString();
-                              }
                               @if (status == "Pending")
                               {
                                 <span class="badge bg-warning">Pending</span>
@@ -181,6 +168,22 @@
                                 <span class="badge bg-secondary">@status</span>
                               }
                             </td>
+                            <td class="vendor-cell" style="position: relative;">
+                              <a href="javascript:void(0);" class="vendor-name text-primary"
+                                onclick="togglePhonePopup(this, '@row["Vendor Phone"]')">
+                                @row["Vendor Name"]
+                              </a>
+                            </td>
+                            <td>@row["Vendor Location"]</td>
+                            <td>@row["0.25L"]</td>
+                            <td>@row["0.5L"]</td>
+                            <td>@row["1L"]</td>
+                            <td>@row["2L"]</td>
+                            <td>@row["5L"]</td>
+                            <td>@row["20L"]</td>
+                            <td>@row["Amount Paid"]</td>
+                            <td>@row["Debt"]</td>
+                            <td>@Convert.ToDateTime(row["BillingTime"]).ToString("dd-MMM-yyyy HH:mm")</td>
                             <td>
                               <button type="button" class="btn btn-link btn-sm text-muted" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="Share bill">
