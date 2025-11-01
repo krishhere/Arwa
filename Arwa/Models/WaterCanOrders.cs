@@ -22,5 +22,5 @@ public class WaterCanOrders
     [Column(TypeName = "decimal(10,2)")]
     public decimal AmountPaid { get; set; } = 0.00m;
     public DateTime BillingDate { get; set; }
-    public Vendor Vendor { get; set; }
+    public int OrderStatus { get; set; }
 }

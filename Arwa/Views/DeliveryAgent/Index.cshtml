@@ -1,0 +1,422 @@
+@using System.Data
+@{
+  Layout = null;
+  DataTable DeliveryAgentOrders = ViewBag.DeliveryAgentUser as DataTable;
+}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Responsive Bootstrap 5 admin dashboard template & web App ui kit.">
+  <meta name="keyword" content="water supply management admin template">
+  <link rel="icon" href="~/assets/img/favicon.ico" type="image/x-icon"> <!--[ Favicon]-->
+  <title>:: Aqua :: Invoice</title>
+  <!--[ plugin css file  ]-->
+  <link rel="stylesheet" href="~/assets/bundles/dataTables.min.css">
+  <link rel="stylesheet" href="~/assets/vendor/metismenu/metismenu.min.css">
+  <!--[ project css file  ]-->
+  <link rel="stylesheet" href="~/assets/css/style.css">
+  <!--[ Jquery Core Js ]-->
+  <script src="~/assets/js/plugins.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .phone-popup {
+      animation: fadeIn o.5s ease-in-out;
+    }
+  </style>
+
+</head>
+
+<body class="aqua admin layout-v2" data-aqua="theme-SunOrange">
+  <div class="page px-xl-4 custom_scroll bg-light">
+    <header class="page-header py-lg-3 py-2 sticky-top bg-light border-bottom">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <!--[ Start:: menu ]-->
+        <a href="/DeliveryAgent" class="brand-icon d-xl-flex mb-3 py-3 align-items-center ps-1">
+          <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--primary-color)" fill-rule="evenodd" clip-rule="evenodd"
+              d="M19.811 16.1238C19.9349 16.8834 20 17.6371 20 18.3778C20 26.4641 12.4693 29.5004 6.81532 27.4825C7.97764 23.0246 17.6597 20.484 19.811 16.1238Z" />
+            <path fill="var(--primary-color)" fill-rule="evenodd" clip-rule="evenodd"
+              d="M9.27152 0C11.9329 2.23179 14.4984 4.70656 16.3069 7.78674C13.4011 13.2154 4.47049 15.8634 1.29274 20.11C1.0363 20.4502 0.81692 20.7846 0.627931 21.1124C-2.51894 11.2927 7.0731 8.35428 9.27152 0Z" />
+            <path fill="var(--heading-color)" fill-rule="evenodd" clip-rule="evenodd"
+              d="M1.85753 30C1.44349 28.5084 0.578012 27.3927 1.71863 24.9369C3.28263 21.5636 11.4349 17.6953 14.9337 14.9872C19.0359 11.8129 22.6312 7.12146 16.3341 1.614C17.1563 3.04869 17.9725 4.09222 17.6171 6.27651C16.4576 13.4298 5.38789 16.1911 1.76787 21.0243C-0.680306 24.2936 0.145273 26.8789 1.85753 30Z"
+              fill="#171825" />
+            <path fill="var(--heading-color)" fill-rule="evenodd" clip-rule="evenodd"
+              d="M5.73097 28.0795C3.83989 21.2432 22.2046 19.0061 18.9649 12.0077C19.4499 18.3177 0.333901 20.7269 5.73097 28.0795Z"
+              fill="#171825" />
+          </svg>
+          <span class="fs-5 fw-medium ms-2 text-primary lh-sm">Arwa</span>
+        </a>
+        <!--[ Start:: right user ]-->
+        <ul class="header-menu flex-grow-1">
+          <!--[ Start:: theme light/dark ]-->
+          <li class="nav-item dropdown">
+            <a class="dropdown-toggle gray-8" href="index.html#" id="bd-theme" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" class="theme-icon-active">
+                <use href="#sun-fill"></use>
+              </svg>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end p-2 shadow" aria-labelledby="bd-theme">
+              <li class="mb-1"><a class="dropdown-item active" href="#" data-bs-theme-value="light"><svg
+                    class="avatar xs me-2 opacity-50 theme-icon" fill="currentColor">
+                    <use href="#sun-fill"></use>
+                  </svg> Light</a></li>
+              <li class="mb-1"><a class="dropdown-item" href="#" data-bs-theme-value="dark"><svg
+                    class="avatar xs me-2 opacity-50 theme-icon" fill="currentColor">
+                    <use href="#moon-stars-fill"></use>
+                  </svg> Dark</a></li>
+              <li class="mb-1"></li>
+              <li class="mb-1"><a class="dropdown-item" href="#" id="ThemeSettingToast"><svg
+                    class="avatar xs me-2 opacity-50 theme-icon" fill="currentColor">
+                    <use href="#theme-setting"></use>
+                  </svg> Theme</a></li>
+            </ul>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+              style="display: none;">
+              <symbol id="sun-fill" viewBox="0 0 16 16">
+                <path
+                  d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+              </symbol>
+              <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+                <path
+                  d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+                <path
+                  d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+              </symbol>
+              <symbol id="circle-half" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+              </symbol>
+              <symbol id="theme-setting" viewBox="0 0 16 16">
+                <path
+                  d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+              </symbol>
+            </svg>
+          </li>
+          <!--[ Start:: user detail ]-->
+
+        </ul>
+      </div>
+      <!--[ Start:: theme color setting ]-->
+      <div class="toast-container position-fixed bottom-0 end-0 p-2 p-sm-3">
+        <div id="liveToast" class="toast border-0 rounded-4 shadow" role="alert" aria-live="assertive"
+          aria-atomic="true">
+          <div class="toast-header p-sm-3 rounded-4">
+            <strong class="me-auto">Theme Settings</strong>
+            <button type="button" class="bg-transparent btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body p-2 p-sm-3">
+            <div class="bg-light p-3 p-sm-4 rounded mb-1">
+              <h6>Set Theme Color</h6>
+              <ul class="choose-skin list-unstyled mb-0">
+                <li data-theme="ValenciaRed">
+                  <div style="--aqua-theme-color: #D63B38;"></div>
+                </li>
+                <li data-theme="SunOrange">
+                  <div style="--aqua-theme-color: #F7A614;"></div>
+                </li>
+                <li data-theme="AppleGreen">
+                  <div style="--aqua-theme-color: #5BC43A;"></div>
+                </li>
+                <li data-theme="CeruleanBlue">
+                  <div style="--aqua-theme-color: #00B8D6;"></div>
+                </li>
+                <li data-theme="PurpleHeart">
+                  <div style="--aqua-theme-color: #2561BE;"></div>
+                </li>
+                <li data-theme="Mariner" class="active">
+                  <div style="--aqua-theme-color: #6238B3;"></div>
+                </li>
+                <li data-theme="FrenchRose">
+                  <div style="--aqua-theme-color: #EB5393;"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--[ Start:: page body area ]-->
+    <main class="page-body py-4">
+      <div class="container-fluid">
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Orders List</h5>
+                <div class="card-action">
+                  <div class="dropdown">
+                    <a href="#" class="dropdown-toggle after-none gray-8" data-bs-toggle="dropdown"
+                      aria-expanded="false" title="Card Filter">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-opacity="0.4"
+                          d="M1.5 0.5C1.5 0.367392 1.55268 0.240215 1.64645 0.146447C1.74021 0.0526784 1.86739 0 2 0H14C14.1326 0 14.2598 0.0526784 14.3536 0.146447C14.4473 0.240215 14.5 0.367392 14.5 0.5V4.5C14.5 4.62331 14.4544 4.74226 14.372 4.834L10 9.692V14.5C9.99992 14.6049 9.96685 14.7071 9.90547 14.7922C9.8441 14.8772 9.75752 14.9409 9.658 14.974L6.658 15.974C6.58287 15.999 6.50288 16.0058 6.4246 15.9939C6.34632 15.982 6.272 15.9516 6.20775 15.9053C6.1435 15.859 6.09116 15.7982 6.05504 15.7277C6.01893 15.6572 6.00006 15.5792 6 15.5V9.692L1.628 4.834C1.54561 4.74226 1.50002 4.62331 1.5 4.5V0.5ZM2.5 1V4.308L6.872 9.166C6.95439 9.25774 6.99998 9.37669 7 9.5V14.806L9 14.14V9.5C9.00002 9.37669 9.04561 9.25774 9.128 9.166L13.5 4.308V1H2.5Z" />
+                        <rect fill-opacity="0.9" x="4" y="2" width="8" height="3" rx="1" />
+                      </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end shadow border-0 p-4 rounded-4" style="width: 300px;">
+                      <h6>Filter Options</h6>
+                      <div class="row g-3 mt-3">
+                        <div class="col-12">
+                          <label class="form-label small text-muted">Sorted by:</label>
+                          <input type="email" class="form-control" placeholder="Search">
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label small text-muted">Status:</label>
+                          <select class="form-select">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                          </select>
+                        </div>
+                        <div class="col-12 text-end mt-4">
+                          <button type="submit" class="btn btn-sm btn-primary">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <table class="table table-hover custom-table my_data_table">
+                  <thead>
+                    <tr class="small text-muted text-uppercase">
+                      <th><span style="padding-right:20px;">Status</th>
+                      <th><span style="padding-right:20px;">Vendor Name</th>
+                      <th><span style="padding-right:20px;">Location</th>
+                      <th><span style="padding-right:15px;">0.25L</th>
+                      <th><span style="padding-right:20px;">0.5L</th>
+                      <th><span style="padding-right:20px;">1L</th>
+                      <th><span style="padding-right:20px;">2L</th>
+                      <th><span style="padding-right:20px;">5L</th>
+                      <th><span style="padding-right:20px;">20L</th>
+                      <th><span style="padding-right:20px;">Billed</th>
+                      <th><span style="padding-right:20px;">Paid</th>
+                      <th><span style="padding-right:20px;">Debt</th>
+                      <th><span style="padding-right:20px;">Billing Time</th>
+                      <th style="display:none;" class="d-none">Hidden Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if (DeliveryAgentOrders != null)
+                    {
+                      foreach (DataRow row in DeliveryAgentOrders.Rows)
+                      {
+                        int orderId = Convert.ToInt32(row["WaterCanOrderId"]);
+                        string status = row["OrderStatus"].ToString();
+                        <tr>
+                          <td>
+                            @if (status == "Pending")
+                            {
+                              <span class="badge bg-warning">Pending</span>
+                            }
+                            else if (status == "Collected")
+                            {
+                              <span class="badge bg-success">Completed</span>
+                            }
+                            else if (status == "Return")
+                            {
+                              <span class="badge bg-info">Returned</span>
+                            }
+                            else
+                            {
+                              <span class="badge bg-secondary">@status</span>
+                            }
+                          </td>
+                          <td class="vendor-cell" style="position: relative;">
+                            <a href="javascript:void(0);" class="vendor-name text-primary"
+                              onclick="togglePhonePopup(this, '@row["Vendor Phone"]')">
+                              @row["Vendor Name"]
+                            </a>
+                          </td>
+                          <td>@row["Vendor Location"]</td>
+                          <td>@row["0.25L"]</td>
+                          <td>@row["0.5L"]</td>
+                          <td>@row["1L"]</td>
+                          <td>@row["2L"]</td>
+                          <td>@row["5L"]</td>
+                          <td>@row["20L"]</td>
+                          <td>@row["Amount Billed"]</td>
+                          <td><span class="d-none">@row["Amount Billed"]</span>
+                            Paid: @if (Convert.ToInt32(row["Debt"]) == 0)
+                            {
+                              <span class="text-success">@row["Amount Paid"]</span>
+                            }
+                            else
+                            {
+                              <span class="text-success">@row["Amount Paid"]</span><br>
+                              <input type="text" class="p-1" name="paid_@orderId" value="@row["Debt"]"
+                                style="border-color: rgba(var(--primary-rgb), 0.3);width: 60px;background: transparent;text-align: center;" />
+                              <button type="button" class="btn btn-sm btn-primary pay">Pay</button>
+     }
+                          </td>
+                          <td class="debt-cell">@row["Debt"]</td>
+                          <td>@Convert.ToDateTime(row["BillingTime"]).ToString("dd-MMM HH:mm")</td>
+                          <td style="display:none;" class="d-none">
+                            <span class="prod-manager">@row["Prod. Manager"]</span>
+                            <span id="OrderId_@orderId">@orderId</span>
+                          </td>
+                        </tr>
+                      }
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <script>
+              $(document).ready(function () {
+                $('.my_data_table').addClass('nowrap').dataTable({
+                  responsive: true,
+                  searching: false,
+                  paging: false,
+                  info: false,
+                });
+                $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+                  $($.fn.dataTable.tables(true)).DataTable().columns.adjust().responsive.recalc();
+                });
+              });
+            </script>
+          </div>
+        </div> <!--[ .row end ]-->
+      </div>
+    </main>
+    <!--[ Start:: page footer link copywrite ]-->
+    <footer class="page-footer py-4 mt-4 mt-auto">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <p class="mb-0 text-muted">© @DateTime.Now.Year <a href="#" title="Arwa" class="text-primary">Arwa</a>, All
+          Rights Reserved.</p>
+        <span class="mb-0 text-muted">Developed by <a href="#" title="Arwa" class="text-primary">Clinetra Solutions
+            Pvt.Ltd</a></span>
+      </div>
+    </footer>
+  </div>
+  <!--[ Jquery Page Js ]-->
+  <script src="~/assets/js/theme.js"></script>
+  <script src="~/assets/bundles/owlcarousel.bundle.js"></script>
+  <script src="~/assets/bundles/dataTables.bundle.js"></script>
+  <script src="~/assets/vendor/metismenu/metismenu.js"></script>
+  <!--[ Jquery Page Js ]-->
+  <script>
+    $(document).on('click', '.pay', function () {
+      var row = $(this).closest('tr');
+      var orderId = row.find('[id^="OrderId_"]').text().trim();
+      var previousPaid = parseFloat(row.find('.text-success').text().trim()) || 0;
+      var enteredAmount = parseFloat(row.find('input[type="text"]').val().trim()) || 0;
+      var totalPaid = previousPaid + enteredAmount;
+      var button = $(this);
+      button.prop('disabled', true).text('Processing...');
+      $.ajax({
+        url: '/DeliveryAgent/UpdatePayment',
+        type: 'POST',
+        data: {
+          orderId: orderId,
+          amountPaid: totalPaid
+        },
+        success: function (response) {
+          if (response.success) {
+            button.prop('disabled', true).text('Paid');
+            button.css({
+            'background-color': 'green',
+            'border-color': 'green'
+          });
+          getAndUpdateDebt(orderId, row);
+          } else {
+            alert('Error: ' + response.message);
+            button.prop('disabled', false).text('Pay');
+          }
+        },
+        error: function () {
+          alert('Something went wrong. Please try again.');
+              button.prop('disabled', false).text('Pay');
+        }
+      });
+      function getAndUpdateDebt(orderId, row) {
+        $.ajax({
+          url: '/DeliveryAgent/GetDebtByOrderId',
+          type: 'GET',
+          data: { orderId: orderId },
+          success: function (response) {
+            if (response && !isNaN(response)) {
+              var debtCell = row.find('.debt-cell');
+              debtCell.text(parseFloat(response).toFixed(2));
+            } else {
+              alert('Error fetching debt value.');
+            }
+          },
+          error: function () {
+            alert('Could not fetch latest debt. Please refresh.');
+          }
+        });
+      }
+
+    });
+  </script>
+  <script>
+    $('#RecentInvoices').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        768: {
+          items: 2
+        },
+        992: {
+          items: 3
+        },
+        1200: {
+          items: 4
+        }
+      }
+    })
+    function togglePhonePopup(element, phoneNumber) {
+      document.querySelectorAll('.phone-popup').forEach(p => p.remove());
+
+      const existingPopup = element.parentElement.querySelector('.phone-popup');
+      if (existingPopup) {
+        existingPopup.remove();
+        return;
+      }
+      const popup = document.createElement('div');
+      popup.className = 'phone-popup';
+      popup.innerHTML = `
+        <div class="text-primary" style="
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 8px 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            position: absolute;
+            top: -30px;
+            left: 10px;
+            z-index: 9999;
+            white-space: nowrap;
+            font-size: 14px;
+        ">
+            📞 <a href="tel:${phoneNumber}" 
+                 style="color: #007bff; text-decoration: none; font-weight: 500;">
+                 ${phoneNumber}
+            </a>
+        </div>
+    `;
+
+      element.parentElement.appendChild(popup);
+
+      // Automatically close popup when clicking outside
+      document.addEventListener('click', function closePopup(event) {
+        if (!element.contains(event.target)) {
+          popup.remove();
+          document.removeEventListener('click', closePopup);
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Arwa")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8dec5c77d4bc4426ab0f2156b3f5b4004eb77271")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+428d2179f65d690fa05d3b4421ac68389969e80f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Arwa")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Arwa")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -189,6 +189,44 @@ public class DbData : DbContext
             return ProdManagerId;
         }
     }
+    public string IsValidDeliveryAgent(string email, string password)
+    {
+        string ProdManagerId = string.Empty;
+        var sql = @"SELECT SalesPersonId FROM SalesPersons where upper(name) = upper(@name) AND password = @Password AND ROLE='DA'";
+        using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    var emailParam = cmd.CreateParameter();
+                    emailParam.ParameterName = "@name";
+                    emailParam.Value = email;
+                    cmd.Parameters.Add(emailParam);
+                    var passwordParam = cmd.CreateParameter();
+                    passwordParam.ParameterName = "@Password";
+                    passwordParam.Value = password;
+                    cmd.Parameters.Add(passwordParam);
+                    var result = cmd.ExecuteScalar();
+                    ProdManagerId = (result != null && result != DBNull.Value) ? result.ToString() : string.Empty;
+                }
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+            return ProdManagerId;
+        }
+    }
     public DataTable GetSalesPersons()
     {
         var dt = new DataTable();
@@ -271,6 +309,78 @@ public class DbData : DbContext
             }
         }
         return dt;
+    }
+    public DataTable GetDeliveryAgentUser(string DeliveryAgentUserId)
+    {
+        var dt = new DataTable();
+        string sql = @"SELECT w.WaterCanOrderId,p.Name AS `Prod. Manager`, v.Name AS `Vendor Name`, v.Location AS `Vendor Location`, v.Phone AS `Vendor Phone`, w.Cases025Ltr AS `0.25L`, w.Cases05Ltr AS `0.5L`, w.Cases1Ltr AS `1L`, w.Cases2Ltr AS `2L`, w.Cases5Ltr AS `5L`, w.Cases20Ltr AS `20L`, w.AmountBilled AS `Amount Billed`, w.AmountPaid AS `Amount Paid`, (w.AmountBilled - w.AmountPaid) AS `Debt`, w.BillingDate AS `BillingTime`, CASE w.OrderStatus WHEN 1 THEN 'Pending' WHEN 2 THEN 'Collected' WHEN 3 THEN 'Return' ELSE 'Unknown' END AS 'OrderStatus' FROM WaterCanOrders w INNER JOIN ProdManagers p ON w.ProdManagerId = p.ProdManagerId INNER JOIN Vendors v ON w.VendorId = v.VendorId INNER JOIN SalesPersons s ON s.SalesPersonId = w.SalesPersonId WHERE s.SalesPersonId = @SalesPersonId AND ( (w.BillingDate > CURDATE() AND (w.AmountBilled - w.AmountPaid) > 0) OR (w.BillingDate < CURDATE() AND (w.AmountBilled - w.AmountPaid) > 0)) order by BillingTime asc,(w.AmountBilled - w.AmountPaid) desc";
+        using (var conn = new MySqlConnection(_context.Database.GetDbConnection().ConnectionString))
+        {
+            try
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+                    var param = cmd.CreateParameter();
+                    param.ParameterName = "@SalesPersonId";
+                    param.Value = DeliveryAgentUserId;
+                    cmd.Parameters.Add(param);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        dt.Load(reader);
+                    }
+                }
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+        return dt;
+    }
+    public string UpdatePayment(int orderId, decimal amountPaid)
+    {
+        try
+        {
+            var order = _context.WaterCanOrders.FirstOrDefault(o => o.WaterCanOrderId == orderId);
+            if (order == null)
+            {
+                return "Order not found.";
+            }
+            order.AmountPaid = amountPaid;
+            if (order.AmountPaid >= order.AmountBilled)
+            {
+                order.OrderStatus = 2;
+            }
+            _context.SaveChanges();
+            return "Payment updated successfully.";
+        }
+        catch (Exception ex)
+        {
+            return "Order not found.";
+        }
+    }
+    public string GetDebtByOrderId(int orderId)
+    {
+        try
+        {
+            var order = _context.WaterCanOrders.FirstOrDefault(o => o.WaterCanOrderId == orderId);
+            if (order != null)
+            {
+                var debt = order.AmountBilled - order.AmountPaid;
+                return debt.ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+        return "Order not found.";
     }
 
 }
